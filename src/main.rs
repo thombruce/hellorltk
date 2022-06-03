@@ -62,17 +62,29 @@ fn new_map() -> Vec<TileType> {
     map
 }
 
-fn draw_map(map: &[TileType], ctx : &mut Rltk) {
+fn draw_map(map: &[TileType], ctx: &mut Rltk) {
     let mut y = 0;
     let mut x = 0;
     for tile in map.iter() {
         // Render a tile depending upon the tile type
         match tile {
             TileType::Floor => {
-                ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), rltk::to_cp437('.'));
+                ctx.set(
+                    x,
+                    y,
+                    RGB::from_f32(0.5, 0.5, 0.5),
+                    RGB::from_f32(0., 0., 0.),
+                    rltk::to_cp437('.'),
+                );
             }
             TileType::Wall => {
-                ctx.set(x, y, RGB::from_f32(0.0, 1.0, 0.0), RGB::from_f32(0., 0., 0.), rltk::to_cp437('#'));
+                ctx.set(
+                    x,
+                    y,
+                    RGB::from_f32(0.0, 1.0, 0.0),
+                    RGB::from_f32(0., 0., 0.),
+                    rltk::to_cp437('#'),
+                );
             }
         }
 
@@ -88,10 +100,14 @@ fn draw_map(map: &[TileType], ctx : &mut Rltk) {
 fn try_move_player(delta_x: i32, delta_y: i32, ecs: &mut World) {
     let mut positions = ecs.write_storage::<Position>();
     let mut players = ecs.write_storage::<Player>();
+    let map = ecs.fetch::<Vec<TileType>>();
 
     for (_player, pos) in (&mut players, &mut positions).join() {
-        pos.x = min(79, max(0, pos.x + delta_x));
-        pos.y = min(49, max(0, pos.y + delta_y));
+        let destination_idx = xy_idx(pos.x + delta_x, pos.y + delta_y);
+        if map[destination_idx] != TileType::Wall {
+            pos.x = min(79, max(0, pos.x + delta_x));
+            pos.y = min(49, max(0, pos.y + delta_y));
+        }
     }
 }
 
@@ -143,9 +159,9 @@ fn main() -> rltk::BError {
     gs.ecs.register::<Position>();
     gs.ecs.register::<Renderable>();
     gs.ecs.register::<Player>();
-    
+
     gs.ecs.insert(new_map());
-    
+
     gs.ecs
         .create_entity()
         .with(Position { x: 40, y: 25 })
@@ -156,6 +172,6 @@ fn main() -> rltk::BError {
         })
         .with(Player {})
         .build();
-    
+
     rltk::main_loop(context, gs)
 }
