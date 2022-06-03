@@ -34,3 +34,7 @@ rustc --print target-list
 ```
 
 And hey presto! _It just works!_
+
+## Criticism
+
+_If I had one gripe with Wolverson's tutorial, it would not be the WSL issue (this is obscure and easily missed). It would be that by the beginning of chapter 5, he has refactored the code twice between chapters with little direction for the reader... One can argue, and I will, that this is a good thing. The reader is encouraged to review and refactor their own code to catch up with the starting state at the beginning of each chapter, though I think an early chapter or external reference offering a guiding hand for this would be of benefit._
