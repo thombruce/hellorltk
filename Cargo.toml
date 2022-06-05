@@ -1,5 +1,5 @@
 [package]
-name = "hellorust"
+name = "hellorltk"
 version = "0.1.0"
 authors = ["Thom Bruce"]
 edition = "2021"

@@ -1,4 +1,4 @@
-# Hello, Rust!
+# Hello, RLTK!
 
 This is my learning project, following an excellent guide to creating a roguelike game using Rust. The brilliant tutorial, written by Herbert Wolverson, can be found here: https://bfnightly.bracketproductions.com/chapter_0.html
 
