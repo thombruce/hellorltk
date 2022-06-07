@@ -88,8 +88,8 @@ pub struct WantsToPickupItem {
 }
 
 #[derive(Component, Debug)]
-pub struct WantsToDrinkPotion {
-    pub potion: Entity,
+pub struct WantsToUseItem {
+    pub item: Entity,
 }
 
 #[derive(Component, Debug, Clone)]
