@@ -37,4 +37,8 @@ And hey presto! _It just works!_
 
 ## Criticism
 
-_If I had one gripe with Wolverson's tutorial, it would not be the WSL issue (this is obscure and easily missed). It would be that by the beginning of chapter 5, he has refactored the code twice between chapters with little direction for the reader... One can argue, and I will, that this is a good thing. The reader is encouraged to review and refactor their own code to catch up with the starting state at the beginning of each chapter, though I think an early chapter or external reference offering a guiding hand for this would be of benefit._
+~~_If I had one gripe with Wolverson's tutorial, it would not be the WSL issue (this is obscure and easily missed). It would be that by the beginning of chapter 5, he has refactored the code twice between chapters with little direction for the reader... One can argue, and I will, that this is a good thing. The reader is encouraged to review and refactor their own code to catch up with the starting state at the beginning of each chapter, though I think an early chapter or external reference offering a guiding hand for this would be of benefit._~~
+
+_In a future update, I will remove the above criticism. The tutorial covers a lot of ground, and the subject matter is obviously quite difficult to handle succinctly. Wolverson does an excellent job, despite these occasions where there are the odd missed bit of info, the odd bug introduced or the odd refactor. Ultimately, the tutorial isn't meant for absolute beginners to programming, and the intermediate-to-experienced programmer will have little problem swinging with the punches._
+
+_Note: By the end of the chapter on Ranged Scrolls and Targeting, a minor bug is left in the code Wolverson has written; confusion scrolls do not get deleted upon use. But as I've written above, I am unsure if this is a mistake or if it is a deliberate error left for the reader to fix._
