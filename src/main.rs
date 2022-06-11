@@ -42,6 +42,7 @@ pub enum RunState {
     MainMenu {
         menu_selection: gui::MainMenuSelection,
     },
+    SaveGame,
 }
 
 pub struct State {
@@ -182,6 +183,11 @@ impl GameState for State {
                         newrunstate = RunState::PlayerTurn;
                     }
                 }
+            }
+            RunState::SaveGame => {
+                newrunstate = RunState::MainMenu {
+                    menu_selection: gui::MainMenuSelection::LoadGame,
+                };
             }
         }
 
