@@ -29,6 +29,7 @@ mod spawner;
 use inventory_system::ItemCollectionSystem;
 use inventory_system::ItemDropSystem;
 use inventory_system::ItemUseSystem;
+mod saveload_system;
 
 #[derive(PartialEq, Copy, Clone)]
 pub enum RunState {
@@ -188,9 +189,7 @@ impl GameState for State {
                 }
             }
             RunState::SaveGame => {
-                let data = serde_json::to_string(&*self.ecs.fetch::<Map>()).unwrap();
-                println!("{}", data);
-
+                saveload_system::save_game(&mut self.ecs);
                 newrunstate = RunState::MainMenu {
                     menu_selection: gui::MainMenuSelection::LoadGame,
                 };
@@ -260,6 +259,9 @@ fn main() -> rltk::BError {
     gs.ecs.register::<AreaOfEffect>();
     gs.ecs.register::<Confusion>();
     gs.ecs.register::<SimpleMarker<SerializeMe>>();
+    gs.ecs.register::<SerializationHelper>();
+
+    gs.ecs.insert(SimpleMarkerAllocator::<SerializeMe>::new());
 
     let map: Map = Map::new_map_rooms_and_corridors();
     let (player_x, player_y) = map.rooms[0].center();
@@ -282,8 +284,6 @@ fn main() -> rltk::BError {
     });
 
     gs.ecs.insert(player_entity);
-
-    gs.ecs.insert(SimpleMarkerAllocator::<SerializeMe>::new());
 
     rltk::main_loop(context, gs)
 }

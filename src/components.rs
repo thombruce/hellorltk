@@ -125,4 +125,13 @@ pub struct Confusion {
     pub turns: i32,
 }
 
+// Serialization helper code. We need to implement ConvertSaveload for each type that contains an
+// Entity.
+
 pub struct SerializeMe;
+
+// Special component that exists to help serialize the game data
+#[derive(Component, Serialize, Deserialize, Clone)]
+pub struct SerializationHelper {
+    pub map: super::map::Map,
+}
