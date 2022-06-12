@@ -40,6 +40,9 @@ macro_rules! deserialize_individually {
     };
 }
 
+#[cfg(target_arch = "wasm32")]
+pub fn save_game(_ecs: &mut World) {}
+#[cfg(not(target_arch = "wasm32"))]
 pub fn save_game(ecs: &mut World) {
     // Create helper
     let mapcopy = ecs.get_mut::<super::map::Map>().unwrap().clone();
