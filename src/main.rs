@@ -29,6 +29,7 @@ mod spawner;
 use inventory_system::ItemCollectionSystem;
 use inventory_system::ItemDropSystem;
 use inventory_system::ItemUseSystem;
+pub mod random_table;
 mod saveload_system;
 
 #[derive(PartialEq, Copy, Clone)]
