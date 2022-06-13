@@ -70,6 +70,7 @@ impl GameState for State {
 
         match newrunstate {
             RunState::MainMenu { .. } => {}
+            RunState::GameOver { .. } => {}
             _ => {
                 draw_map(&self.ecs, ctx);
 
