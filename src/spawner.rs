@@ -1,7 +1,8 @@
 use super::{
     components::EquipmentSlot, map::MAPWIDTH, random_table::RandomTable, AreaOfEffect, BlocksTile,
-    CombatStats, Confusion, Consumable, Equippable, InflictsDamage, Item, Monster, Name, Player,
-    Position, ProvidesHealing, Ranged, Rect, Renderable, SerializeMe, Viewshed,
+    CombatStats, Confusion, Consumable, DefenseBonus, Equippable, InflictsDamage, Item,
+    MeleePowerBonus, Monster, Name, Player, Position, ProvidesHealing, Ranged, Rect, Renderable,
+    SerializeMe, Viewshed,
 };
 use rltk::{RandomNumberGenerator, RGB};
 use specs::prelude::*;
@@ -233,6 +234,7 @@ fn dagger(ecs: &mut World, x: i32, y: i32) {
         .with(Equippable {
             slot: EquipmentSlot::Melee,
         })
+        .with(MeleePowerBonus { power: 2 })
         .marked::<SimpleMarker<SerializeMe>>()
         .build();
 }
@@ -253,6 +255,7 @@ fn shield(ecs: &mut World, x: i32, y: i32) {
         .with(Equippable {
             slot: EquipmentSlot::Shield,
         })
+        .with(DefenseBonus { defense: 1 })
         .marked::<SimpleMarker<SerializeMe>>()
         .build();
 }
