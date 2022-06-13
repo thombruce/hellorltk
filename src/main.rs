@@ -28,6 +28,7 @@ mod inventory_system;
 mod spawner;
 use inventory_system::ItemCollectionSystem;
 use inventory_system::ItemDropSystem;
+use inventory_system::ItemRemoveSystem;
 use inventory_system::ItemUseSystem;
 pub mod random_table;
 mod saveload_system;
@@ -49,6 +50,7 @@ pub enum RunState {
     },
     SaveGame,
     NextLevel,
+    ShowRemoveItem,
 }
 
 pub struct State {
@@ -204,6 +206,24 @@ impl GameState for State {
                 self.goto_next_level();
                 newrunstate = RunState::PreRun;
             }
+            RunState::ShowRemoveItem => {
+                let result = gui::remove_item_menu(self, ctx);
+                match result.0 {
+                    gui::ItemMenuResult::Cancel => newrunstate = RunState::AwaitingInput,
+                    gui::ItemMenuResult::NoResponse => {}
+                    gui::ItemMenuResult::Selected => {
+                        let item_entity = result.1.unwrap();
+                        let mut intent = self.ecs.write_storage::<WantsToRemoveItem>();
+                        intent
+                            .insert(
+                                *self.ecs.fetch::<Entity>(),
+                                WantsToRemoveItem { item: item_entity },
+                            )
+                            .expect("Unable to insert intent");
+                        newrunstate = RunState::PlayerTurn;
+                    }
+                }
+            }
         }
 
         {
@@ -233,6 +253,8 @@ impl State {
         items.run_now(&self.ecs);
         let mut drop_items = ItemDropSystem {};
         drop_items.run_now(&self.ecs);
+        let mut item_remove = ItemRemoveSystem {};
+        item_remove.run_now(&self.ecs);
         self.ecs.maintain();
     }
 }
@@ -371,6 +393,7 @@ fn main() -> rltk::BError {
     gs.ecs.register::<Equipped>();
     gs.ecs.register::<MeleePowerBonus>();
     gs.ecs.register::<DefenseBonus>();
+    gs.ecs.register::<WantsToRemoveItem>();
 
     gs.ecs.insert(SimpleMarkerAllocator::<SerializeMe>::new());
 

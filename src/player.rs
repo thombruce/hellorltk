@@ -177,6 +177,8 @@ pub fn player_input(gs: &mut State, ctx: &mut Rltk) -> RunState {
 
             VirtualKeyCode::D => return RunState::ShowDropItem,
 
+            VirtualKeyCode::R => return RunState::ShowRemoveItem,
+
             // Level changes
             VirtualKeyCode::Period => {
                 if try_next_level(&mut gs.ecs) {
