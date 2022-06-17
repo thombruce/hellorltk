@@ -271,6 +271,8 @@ impl State {
         drop_items.run_now(&self.ecs);
         let mut item_remove = ItemRemoveSystem {};
         item_remove.run_now(&self.ecs);
+        let mut particles = particle_system::ParticleSpawnSystem {};
+        particles.run_now(&self.ecs);
         self.ecs.maintain();
     }
 }
@@ -456,6 +458,8 @@ fn main() -> rltk::BError {
     gs.ecs.register::<DefenseBonus>();
     gs.ecs.register::<WantsToRemoveItem>();
     gs.ecs.register::<ParticleLifetime>();
+
+    gs.ecs.insert(particle_system::ParticleBuilder::new());
 
     gs.ecs.insert(SimpleMarkerAllocator::<SerializeMe>::new());
 
