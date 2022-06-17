@@ -252,6 +252,18 @@ impl<'a> System<'a> for ItemUseSystem {
                                 ));
                             }
 
+                            let pos = positions.get(*mob);
+                            if let Some(pos) = pos {
+                                particle_builder.request(
+                                    pos.x,
+                                    pos.y,
+                                    rltk::RGB::named(rltk::MAGENTA),
+                                    rltk::RGB::named(rltk::BLACK),
+                                    rltk::to_cp437('?'),
+                                    200.0,
+                                );
+                            }
+
                             used_item = true;
                         }
                     }
