@@ -30,6 +30,7 @@ use inventory_system::ItemCollectionSystem;
 use inventory_system::ItemDropSystem;
 use inventory_system::ItemRemoveSystem;
 use inventory_system::ItemUseSystem;
+mod particle_system;
 pub mod random_table;
 mod saveload_system;
 
@@ -67,6 +68,7 @@ impl GameState for State {
         }
 
         ctx.cls();
+        particle_system::cull_dead_particles(&mut self.ecs, ctx);
 
         match newrunstate {
             RunState::MainMenu { .. } => {}
@@ -453,6 +455,7 @@ fn main() -> rltk::BError {
     gs.ecs.register::<MeleePowerBonus>();
     gs.ecs.register::<DefenseBonus>();
     gs.ecs.register::<WantsToRemoveItem>();
+    gs.ecs.register::<ParticleLifetime>();
 
     gs.ecs.insert(SimpleMarkerAllocator::<SerializeMe>::new());
 
